@@ -26,6 +26,7 @@ var SpotLight = THREE.SpotLight;
 var PointLight = THREE.PointLight;
 var AmbientLight = THREE.AmbientLight;
 var HemisphereLight = THREE.HemisphereLight;
+//import Control = objects.Control;
 var GUI = dat.GUI;
 var Color = THREE.Color;
 var Vector3 = THREE.Vector3;
@@ -39,9 +40,9 @@ var axis;
 var camera;
 var renderer;
 var sun;
-var saturn;
-var moon1;
-var moon2;
+var jupiter;
+var earth;
+var earthMoon;
 var step = 1;
 var stats;
 var hemlLight;
@@ -61,12 +62,14 @@ function init() {
 }
 function createGeometry() {
     // new Planet(size,materialColor, positionFromSun, planetSpeed)
-    sun = new Planet(5, 'sun', 0, 0);
-    saturn = new Planet(5, 'saturn', 40, 0.5);
-    // moon1 = new Moon(2, 'moon', 50, 0.7);
-    // moon2 = new Moon(2, 'moon2', 55, 0.7);
+    sun = new Planet(15, 'sun', 0, 0);
+    earth = new Planet(5, 'earth', 50, 0.3);
+    jupiter = new Planet(10, 'jupiter', 70, 0.5);
+    earthMoon = new Planet(2, 'moon2', 30, 0.7);
     scene.add(sun.planet);
-    scene.add(saturn.planet);
+    scene.add(jupiter.planet);
+    scene.add(earth.planet);
+    jupiter.add(earthMoon.planet);
     hemlLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
     scene.add(hemlLight);
     pointLight = new THREE.PointLight(0xffffff, 0.2, 0);
@@ -94,11 +97,13 @@ function planetPositionY(position, speed) {
 }
 function animate() {
     step += 0.01;
-    saturn.planet.position.x = planetPositionX(saturn.pos, saturn.speed);
-    saturn.planet.position.z = planetPositionZ(saturn.pos, saturn.speed);
-    //  moon1.planet.position.x = planetPositionX(moon1.pos, moon1.speed);
-    //  moon1.planet.position.z = planetPositionZ(moon1.pos, moon1.speed);
-    //  moon1.planet.position.y = planetPositionY(moon1.pos, moon1.speed);
+    jupiter.planet.position.x = planetPositionX(jupiter.pos, jupiter.speed);
+    jupiter.planet.position.z = planetPositionZ(jupiter.pos, jupiter.speed);
+    earth.planet.position.x = planetPositionX(earth.pos, earth.speed);
+    earth.planet.position.z = planetPositionZ(earth.pos, earth.speed);
+    earthMoon.planet.position.x = planetPositionX(earthMoon.pos, earthMoon.speed);
+    earthMoon.planet.position.z = planetPositionZ(earthMoon.pos, earthMoon.speed);
+    earthMoon.planet.position.y = planetPositionY(earthMoon.pos, earthMoon.speed);
     //   moon2.planet.position.x = planetPositionX(moon2.pos, moon2.speed);
     //   moon2.planet.position.z = planetPositionZ(moon2.pos, moon2.speed);
     requestAnimationFrame(animate);
@@ -112,13 +117,13 @@ window.onload = function () {
 // Setup default renderer
 function setupRenderer() {
     renderer = new Renderer();
-    renderer.setClearColor(0xFFFFFF, 1.0);
+    renderer.setClearColor(0x040404, 1.0);
     renderer.setSize(window.innerWidth, window.innerHeight);
     //     renderer.shadowMap.enabled = true;
 }
 // Setup main camera for the scene
 function setupCamera() {
-    camera = new PerspectiveCamera(30, window.innerWidth / window.innerHeight, 0.1, 1000);
+    camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
     camera.position.x = 0;
     camera.position.y = 70;
     camera.position.z = 180;
