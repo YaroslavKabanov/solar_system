@@ -1,0 +1,25 @@
+{
+  "name": "COMP392-Assignment1-Cubeman",
+  "authors": [
+    "Yaroslav Kabanov <ya.kabanov@gmail.com>"
+  ],
+  "description": "COMP392-Assignment1-Cubeman for Advanced Graphics",
+  "main": "",
+  "moduleType": [],
+  "license": "MIT",
+  "homepage": "https://github.com/YaroslavKabanov/comp392-cubeman_1.git",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "Scripts/lib"
+  ],
+  "dependencies": {
+    "three.js": "threejs#*",
+    "dat-gui": "~0.5.1",
+    "stats.js": "*",
+    "threex.colliders": "*"
+  }
+}
