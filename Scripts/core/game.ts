@@ -48,10 +48,14 @@ var sun: Planet;
 var jupiter: Planet;
 var earth: Planet;
 var earthMoon: Planet;
+var mars: Planet;
+var uranus: Planet;
+var neptune: Planet;
 var step: number = 1;
 var stats: Stats;
 var hemlLight: HemisphereLight;
 var pointLight: PointLight;
+var ambientLight: AmbientLight;
 
 
     function init () {
@@ -80,22 +84,40 @@ var pointLight: PointLight;
            // new Planet(size,materialColor, positionFromSun, planetSpeed)
 
     sun = new Planet(15,'sun',0,0);
-    earth = new Planet(5,'earth', 50, 0.3);
+    mars = new Planet(4, 'mars', 20, 0.4);
+    earth = new Planet(5,'earth', 40, 0.8);
     jupiter = new Planet(10, 'jupiter', 70, 0.5);
+    uranus = new Planet(7, 'uranus', 90, 0.6);
+    neptune = new Planet(8, 'neptune', 100, 0.4);
+    
     earthMoon = new Planet(2, 'moon2', 30, 0.7);
 
-    scene.add(sun.planet);
-    scene.add(jupiter.planet);
-    scene.add(earth.planet);
-    jupiter.add(earthMoon.planet);
+     scene.add(sun.planet);
+     scene.add(mars.planet);
+     scene.add(earth.planet);
+     scene.add(jupiter.planet);
+     scene.add(uranus.planet);
+     scene.add(neptune.planet);
 
 
     hemlLight = new THREE.HemisphereLight( 0xffffff, 0xffffff,1);
     scene.add(hemlLight);
 
-    pointLight = new THREE.PointLight(0xffffff,0.2,0);
-    pointLight.position.set(0, 90, 90);
-    scene.add(pointLight);
+ //   pointLight = new THREE.PointLight(0xffffff,0.2,0);
+ //   pointLight.position.set(0, 90, 90);
+ //   scene.add(pointLight);
+ 
+ pointLight = new PointLight( 0xffffff, 1, 100 );
+    pointLight.position.set(0,4,0);
+    pointLight.intensity = 5;
+    pointLight.distance = 100;
+    pointLight.castShadow = true;
+    pointLight.shadowMapWidth = 2048;
+    pointLight.shadowMapHeight = 2048;
+    
+    ambientLight = new AmbientLight(0x090909);
+    scene.add(ambientLight);
+        
         
     }
 
@@ -128,20 +150,22 @@ var pointLight: PointLight;
 
     function animate(): void {
         step +=0.01;
-
-     
-        jupiter.planet.position.x = planetPositionX(jupiter.pos, jupiter.speed);
-        jupiter.planet.position.z = planetPositionZ(jupiter.pos, jupiter.speed);
+        
+        mars.planet.position.x = planetPositionX(mars.pos, mars.speed);
+        mars.planet.position.z = planetPositionZ(mars.pos, mars.speed);
         
         earth.planet.position.x = planetPositionX(earth.pos, earth.speed);
         earth.planet.position.z = planetPositionZ(earth.pos, earth.speed);
-
-       earthMoon.planet.position.x = planetPositionX(earthMoon.pos, earthMoon.speed);
-       earthMoon.planet.position.z = planetPositionZ(earthMoon.pos, earthMoon.speed);
-       earthMoon.planet.position.y = planetPositionY(earthMoon.pos, earthMoon.speed);
-
-     //   moon2.planet.position.x = planetPositionX(moon2.pos, moon2.speed);
-     //   moon2.planet.position.z = planetPositionZ(moon2.pos, moon2.speed);
+        
+        jupiter.planet.position.x = planetPositionX(jupiter.pos, jupiter.speed);
+        jupiter.planet.position.z = planetPositionZ(jupiter.pos, jupiter.speed);
+        
+        uranus.planet.position.x = planetPositionX(uranus.pos, uranus.speed);
+        uranus.planet.position.z = planetPositionZ(uranus.pos, uranus.speed);
+        
+        neptune.planet.position.x = planetPositionX(neptune.pos, neptune.speed);
+        neptune.planet.position.z = planetPositionZ(neptune.pos, neptune.speed);
+        
 
         requestAnimationFrame(animate);
         renderer.render(scene, camera);
