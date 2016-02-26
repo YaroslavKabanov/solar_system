@@ -109,14 +109,16 @@ var moonCentre: Object3D;
     uranus = new Planet(7, 'uranus', 90, 0.1);
     uranus.castShadow = true;
    
-    neptune = new Planet(8, 'neptune', 100, 0.4);
+    neptune = new Planet(8, 'neptune', 110, 0.4);
     neptune.castShadow = true;
     
     moonCentre = new Object3D;
+    scene.add(moonCentre);
    
-   sphereMaterial = new LambertMaterial({color:0xFF0000});
+   sphereMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('Content/images/moon.jpg') });
    sphereGeometry = new SphereGeometry(2,20,20);
    moon = new Mesh(sphereGeometry, sphereMaterial);
+   moon.position.set(6,6,0);
    moon.castShadow = true; 
    moonCentre.add(moon); 
    
@@ -198,21 +200,31 @@ var moonCentre: Object3D;
         
         mars.planet.position.x = planetPositionX(mars.pos, mars.speed);
         mars.planet.position.z = planetPositionZ(mars.pos, mars.speed);
+        mars.planet.rotation.y += 0.020;
         
         earth.planet.position.x = planetPositionX(earth.pos, earth.speed);
         earth.planet.position.z = planetPositionZ(earth.pos, earth.speed);
+        earth.planet.rotation.y += 0.020;
         
         moonCentre.position.x = planetPositionX(earth.pos, earth.speed);
-        moonCentre.position.z = planetPositionZ(earth.pos, earth.speed);
-        
+        moonCentre.position.z = planetPositionZ(earth.pos, earth.speed);      
+  
         jupiter.planet.position.x = planetPositionX(jupiter.pos, jupiter.speed);
         jupiter.planet.position.z = planetPositionZ(jupiter.pos, jupiter.speed);
+        jupiter.planet.rotation.y += 0.020;
         
         uranus.planet.position.x = planetPositionX(uranus.pos, uranus.speed);
         uranus.planet.position.z = planetPositionZ(uranus.pos, uranus.speed);
+        uranus.planet.rotation.y += 0.020;
         
         neptune.planet.position.x = planetPositionX(neptune.pos, neptune.speed);
         neptune.planet.position.z = planetPositionZ(neptune.pos, neptune.speed);
+        neptune.planet.rotation.y += 0.020;
+   
+        
+        
+        moonCentre.rotation.z += 0.025;
+            
    /*     
         moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
         moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
@@ -244,7 +256,7 @@ window.onload = function () {
     
  // Setup main camera for the scene
     function setupCamera(): void {
-        camera = new PerspectiveCamera(50, window.innerWidth / window.innerHeight, 0.1, 1000);
+        camera = new PerspectiveCamera(60, window.innerWidth / window.innerHeight, 0.1, 1000);
         camera.position.x = 0;
         camera.position.y = 70;
         camera.position.z = 180;
