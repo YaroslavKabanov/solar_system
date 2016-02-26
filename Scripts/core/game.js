@@ -36,6 +36,9 @@ var Point = objects.Point;
 var CScreen = config.Screen;
 //Custom Game Objects
 var Planet = objects.Planet;
+var sphereGeometry;
+var sphereMaterial;
+var spotLight;
 var scene;
 var axis;
 var camera;
@@ -47,6 +50,8 @@ var earthMoon;
 var mars;
 var uranus;
 var neptune;
+var moon;
+var moonTest;
 var step = 1;
 var stats;
 var hemlLight;
@@ -81,25 +86,44 @@ function createGeometry() {
     uranus.castShadow = true;
     neptune = new Planet(8, 'neptune', 100, 0.4);
     neptune.castShadow = true;
-    earthMoon = new Planet(2, 'moon2', 30, 0.8);
+    moon = new Planet(4, 'moon', 20, 0.4);
+    earth.add(moon.planet);
+    /*  sphereMaterial = new LambertMaterial({color:0xFFFFFF});
+      sphereGeometry = new SphereGeometry(4,20,20);
+      moonTest = new Mesh(sphereGeometry,sphereMaterial);
+      moonTest.castShadow = true;
+      moonTest.receiveShadow = true;
+      moonTest.position.y = 10;
+      earth.add(moonTest);
+     */
     scene.add(sun.planet);
     scene.add(mars.planet);
     scene.add(earth.planet);
     scene.add(jupiter.planet);
     scene.add(uranus.planet);
     scene.add(neptune.planet);
+    // added hem Light 
     hemlLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
     scene.add(hemlLight);
-    //   pointLight = new THREE.PointLight(0xffffff,0.2,0);
-    //   pointLight.position.set(0, 90, 90);
-    //   scene.add(pointLight);
+    /*
+     spotLight = new SpotLight( 0x000000 );
+     spotLight.position.set( 0, 20, 180 );
+     spotLight.castShadow = true;
+     spotLight.lookAt(scene.position);
+     pointLight.intensity = 2;
+     pointLight.distance = 100;
+     
+     scene.add(spotLight);
+     */
+    // added point light
     pointLight = new PointLight(0xffffff, 1, 100);
-    pointLight.position.set(0, 4, 0);
-    pointLight.intensity = 5;
+    pointLight.position.set(0, 0, 0);
+    pointLight.intensity = 20;
     pointLight.distance = 100;
     pointLight.castShadow = true;
     pointLight.shadowMapWidth = 2048;
     pointLight.shadowMapHeight = 2048;
+    scene.add(pointLight);
     ambientLight = new AmbientLight(0x090909);
     scene.add(ambientLight);
 }
@@ -134,6 +158,8 @@ function animate() {
     uranus.planet.position.z = planetPositionZ(uranus.pos, uranus.speed);
     neptune.planet.position.x = planetPositionX(neptune.pos, neptune.speed);
     neptune.planet.position.z = planetPositionZ(neptune.pos, neptune.speed);
+    moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
+    moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
     requestAnimationFrame(animate);
     renderer.render(scene, camera);
 }

@@ -41,6 +41,9 @@ import CScreen = config.Screen;
 import Planet  = objects.Planet;
 
 
+var sphereGeometry: SphereGeometry;
+var sphereMaterial:LambertMaterial;
+var spotLight: SpotLight;
 var scene: Scene;
 var axis: AxisHelper;
 var camera: PerspectiveCamera;
@@ -52,6 +55,8 @@ var earthMoon: Planet;
 var mars: Planet;
 var uranus: Planet;
 var neptune: Planet;
+var moon: Planet;
+var moonTest: Mesh;
 var step: number = 1;
 var stats: Stats;
 var hemlLight: HemisphereLight;
@@ -87,18 +92,33 @@ var control: Control;
 
     sun = new Planet(15,'sun',0,0);
     sun.castShadow = true;
+   
     mars = new Planet(4, 'mars', 20, 0.4);
     mars.castShadow = true;
+   
     earth = new Planet(5,'earth', 40, 0.8);
     earth.castShadow = true;
+   
     jupiter = new Planet(10, 'jupiter', 70, 0.5);
     jupiter.castShadow = true;
+   
     uranus = new Planet(7, 'uranus', 90, 0.1);
     uranus.castShadow = true;
+   
     neptune = new Planet(8, 'neptune', 100, 0.4);
     neptune.castShadow = true;
     
-    earthMoon = new Planet(2, 'moon2', 30, 0.8);
+    moon = new Planet(4, 'moon', 20, 0.4);
+    earth.add(moon.planet);
+    
+  /*  sphereMaterial = new LambertMaterial({color:0xFFFFFF});
+    sphereGeometry = new SphereGeometry(4,20,20);
+    moonTest = new Mesh(sphereGeometry,sphereMaterial);
+    moonTest.castShadow = true;
+    moonTest.receiveShadow = true;
+    moonTest.position.y = 10;  
+    earth.add(moonTest); 
+   */
 
      scene.add(sun.planet);
      scene.add(mars.planet);
@@ -106,22 +126,35 @@ var control: Control;
      scene.add(jupiter.planet);
      scene.add(uranus.planet);
      scene.add(neptune.planet);
+     
+    
 
-
-    hemlLight = new THREE.HemisphereLight( 0xffffff, 0xffffff,1);
+     // added hem Light 
+    hemlLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1);
     scene.add(hemlLight);
-
- //   pointLight = new THREE.PointLight(0xffffff,0.2,0);
- //   pointLight.position.set(0, 90, 90);
- //   scene.add(pointLight);
- 
- pointLight = new PointLight( 0xffffff, 1, 100 );
-    pointLight.position.set(0,4,0);
-    pointLight.intensity = 5;
+   
+   /* 
+    spotLight = new SpotLight( 0x000000 );
+    spotLight.position.set( 0, 20, 180 );
+    spotLight.castShadow = true;
+    spotLight.lookAt(scene.position);
+    pointLight.intensity = 2;
+    pointLight.distance = 100;
+    
+    scene.add(spotLight);
+    */
+    
+    // added point light
+    pointLight = new PointLight( 0xffffff, 1 , 100 );
+    pointLight.position.set(0,0,0);
+    pointLight.intensity = 20;
     pointLight.distance = 100;
     pointLight.castShadow = true;
     pointLight.shadowMapWidth = 2048;
     pointLight.shadowMapHeight = 2048;
+    
+     scene.add(pointLight);
+
     
     ambientLight = new AmbientLight(0x090909);
     scene.add(ambientLight);
@@ -171,6 +204,9 @@ var control: Control;
         
         neptune.planet.position.x = planetPositionX(neptune.pos, neptune.speed);
         neptune.planet.position.z = planetPositionZ(neptune.pos, neptune.speed);
+        
+        moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
+        moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
         
 
         requestAnimationFrame(animate);
