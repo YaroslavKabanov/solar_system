@@ -132,10 +132,8 @@ gui = new GUI();
 control = new Control(0.05);
 addControl(control);
 function addControl(controlObject) {
-    gui.add({ zoom: 100 }, 'zoom', 15, 150).onChange(function (value) {
-        camera.fov = value;
-        camera.updateProjectionMatrix();
-    });
+    gui.add(controlObject, "zoomPlanetIn");
+    gui.add(controlObject, "zoomPlanetOut");
 }
 function planetPositionX(position, speed) {
     return position * Math.sin(step * speed);
@@ -146,7 +144,7 @@ function planetPositionZ(position, speed) {
 function planetPositionY(position, speed) {
     return position * Math.cos(step * speed);
 }
-function animate() {
+function gameLoop() {
     step += 0.01;
     mars.planet.position.x = planetPositionX(mars.pos, mars.speed);
     mars.planet.position.z = planetPositionZ(mars.pos, mars.speed);
@@ -160,13 +158,14 @@ function animate() {
     neptune.planet.position.z = planetPositionZ(neptune.pos, neptune.speed);
     moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
     moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
-    requestAnimationFrame(animate);
+    //   control.zoomPlanetIn(); 
+    requestAnimationFrame(gameLoop);
     renderer.render(scene, camera);
 }
 window.onload = function () {
     init();
     createGeometry();
-    animate();
+    gameLoop();
 };
 // Setup default renderer
 function setupRenderer() {

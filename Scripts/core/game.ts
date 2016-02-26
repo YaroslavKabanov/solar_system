@@ -168,10 +168,9 @@ var control: Control;
     addControl(control);
     
     function addControl(controlObject: Control): void {
-    gui.add({zoom: 100}, 'zoom', 15, 150).onChange(function(value){
-        camera.fov=value;
-        camera.updateProjectionMatrix();
-    });
+         gui.add(controlObject, "zoomPlanetIn");
+         gui.add(controlObject, "zoomPlanetOut");
+          
 }
 
         function planetPositionX(position,speed){
@@ -187,7 +186,7 @@ var control: Control;
         }
 
 
-    function animate(): void {
+    function gameLoop(): void {
         step +=0.01;
         
         mars.planet.position.x = planetPositionX(mars.pos, mars.speed);
@@ -207,16 +206,19 @@ var control: Control;
         
         moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
         moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
+       
+      
+    //   control.zoomPlanetIn(); 
         
 
-        requestAnimationFrame(animate);
+        requestAnimationFrame(gameLoop);
         renderer.render(scene, camera);
     }
     
 window.onload = function () {
     init();
     createGeometry();
-    animate();
+    gameLoop();
 }
 
 // Setup default renderer
