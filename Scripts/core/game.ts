@@ -64,7 +64,9 @@ var pointLight: PointLight;
 var ambientLight: AmbientLight;
 var gui: GUI;
 var control: Control;
-var zoom: boolean;
+var zoomEarth: boolean;
+var zoomMars: boolean;
+var zoomJupiter: boolean;
 var moon: Mesh;
 var moonCentre: Object3D;
 
@@ -177,7 +179,9 @@ var moonCentre: Object3D;
     addControl(control);
     
     function addControl(controlObject: Control): void {
-         gui.add(controlObject, "zoomPlanetIn"); // zoom planet with moon
+         gui.add(controlObject, "zoomEarth"); // zoom planet with moon - Earth
+         gui.add(controlObject, "zoomMars");
+         gui.add(controlObject, "zoomJupiter");
          gui.add(controlObject, "zoomPlanetOut"); // back to normal view 
           
 }
@@ -231,8 +235,16 @@ var moonCentre: Object3D;
         moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
         */
         
-        if (zoom == true) {
-             control.zoomPlanetIn(); 
+        if (zoomEarth == true) {
+             control.zoomEarth(); 
+        }
+        
+        if (zoomMars == true) {
+            control.zoomMars();
+        }
+        
+        if (zoomJupiter == true) {
+            control.zoomJupiter();
         }
         
         

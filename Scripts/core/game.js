@@ -59,7 +59,9 @@ var pointLight;
 var ambientLight;
 var gui;
 var control;
-var zoom;
+var zoomEarth;
+var zoomMars;
+var zoomJupiter;
 var moon;
 var moonCentre;
 function init() {
@@ -138,7 +140,9 @@ gui = new GUI();
 control = new Control(0.05);
 addControl(control);
 function addControl(controlObject) {
-    gui.add(controlObject, "zoomPlanetIn"); // zoom planet with moon
+    gui.add(controlObject, "zoomEarth"); // zoom planet with moon - Earth
+    gui.add(controlObject, "zoomMars");
+    gui.add(controlObject, "zoomJupiter");
     gui.add(controlObject, "zoomPlanetOut"); // back to normal view 
 }
 // planet position x 
@@ -179,8 +183,14 @@ function gameLoop() {
          moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
          moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
          */
-    if (zoom == true) {
-        control.zoomPlanetIn();
+    if (zoomEarth == true) {
+        control.zoomEarth();
+    }
+    if (zoomMars == true) {
+        control.zoomMars();
+    }
+    if (zoomJupiter == true) {
+        control.zoomJupiter();
     }
     requestAnimationFrame(gameLoop);
     renderer.render(scene, camera);
