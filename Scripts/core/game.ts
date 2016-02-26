@@ -153,7 +153,7 @@ var moonCentre: Object3D;
     pointLight = new PointLight( 0xffffff, 1 , 100 );
     pointLight.position.set(0,0,0);
     pointLight.intensity = 20;
-    pointLight.distance = 100;
+    pointLight.distance = 120;
     pointLight.castShadow = true;
     pointLight.shadowMapWidth = 1024;
     pointLight.shadowMapHeight = 1248;
@@ -223,7 +223,8 @@ var moonCentre: Object3D;
    
         
         
-        moonCentre.rotation.z += 0.025;
+        moonCentre.rotation.z += 0.020;
+        moon.rotation.y += 0.025;
             
    /*     
         moon.planet.position.x = planetPositionX(moon.pos, moon.speed);

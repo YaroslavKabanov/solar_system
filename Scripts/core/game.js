@@ -124,7 +124,7 @@ function createGeometry() {
     pointLight = new PointLight(0xffffff, 1, 100);
     pointLight.position.set(0, 0, 0);
     pointLight.intensity = 20;
-    pointLight.distance = 100;
+    pointLight.distance = 120;
     pointLight.castShadow = true;
     pointLight.shadowMapWidth = 1024;
     pointLight.shadowMapHeight = 1248;
@@ -173,7 +173,8 @@ function gameLoop() {
     neptune.planet.position.x = planetPositionX(neptune.pos, neptune.speed);
     neptune.planet.position.z = planetPositionZ(neptune.pos, neptune.speed);
     neptune.planet.rotation.y += 0.020;
-    moonCentre.rotation.z += 0.025;
+    moonCentre.rotation.z += 0.020;
+    moon.rotation.y += 0.025;
     /*
          moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
          moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
