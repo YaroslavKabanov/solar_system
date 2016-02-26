@@ -1,1 +1,1 @@
-#COMP392-Assignment1-Cubeman
+#COMP392-Assignment2-SolarSystem

@@ -17,6 +17,7 @@ var PlaneGeometry = THREE.PlaneGeometry;
 var SphereGeometry = THREE.SphereGeometry;
 var Geometry = THREE.Geometry;
 var AxisHelper = THREE.AxisHelper;
+var Control = objects.Control;
 var LambertMaterial = THREE.MeshLambertMaterial;
 var MeshBasicMaterial = THREE.MeshBasicMaterial;
 var Material = THREE.Material;
@@ -51,6 +52,8 @@ var stats;
 var hemlLight;
 var pointLight;
 var ambientLight;
+var gui;
+var control;
 function init() {
     // new scene objects
     scene = new Scene();
@@ -67,12 +70,18 @@ function init() {
 function createGeometry() {
     // new Planet(size,materialColor, positionFromSun, planetSpeed)
     sun = new Planet(15, 'sun', 0, 0);
+    sun.castShadow = true;
     mars = new Planet(4, 'mars', 20, 0.4);
+    mars.castShadow = true;
     earth = new Planet(5, 'earth', 40, 0.8);
+    earth.castShadow = true;
     jupiter = new Planet(10, 'jupiter', 70, 0.5);
-    uranus = new Planet(7, 'uranus', 90, 0.6);
+    jupiter.castShadow = true;
+    uranus = new Planet(7, 'uranus', 90, 0.1);
+    uranus.castShadow = true;
     neptune = new Planet(8, 'neptune', 100, 0.4);
-    earthMoon = new Planet(2, 'moon2', 30, 0.7);
+    neptune.castShadow = true;
+    earthMoon = new Planet(2, 'moon2', 30, 0.8);
     scene.add(sun.planet);
     scene.add(mars.planet);
     scene.add(earth.planet);
@@ -94,16 +103,16 @@ function createGeometry() {
     ambientLight = new AmbientLight(0x090909);
     scene.add(ambientLight);
 }
-/*
-    function Moon(size, material, position, speed) {
-        this.name = new THREE.SphereGeometry(size, 20, 20);
-        this.mat = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('images/' + material + '.jpg') });
-        this.planet = new THREE.Mesh(this.name, this.mat);
-        this.pos = position;
-        this.speed = speed;
-        scene.add(this.planet);
-    }
-    */
+// add controls
+gui = new GUI();
+control = new Control(0.05);
+addControl(control);
+function addControl(controlObject) {
+    gui.add({ zoom: 100 }, 'zoom', 15, 150).onChange(function (value) {
+        camera.fov = value;
+        camera.updateProjectionMatrix();
+    });
+}
 function planetPositionX(position, speed) {
     return position * Math.sin(step * speed);
 }

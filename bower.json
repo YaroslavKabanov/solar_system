@@ -1,13 +1,13 @@
 {
-  "name": "COMP392-Assignment1-Cubeman",
+  "name": "COMP392-Assignment2-SolarSystem",
   "authors": [
     "Yaroslav Kabanov <ya.kabanov@gmail.com>"
   ],
-  "description": "COMP392-Assignment1-Cubeman for Advanced Graphics",
+  "description": "COMP392-Assignment2-SolarSystem for Advanced Graphics",
   "main": "",
   "moduleType": [],
   "license": "MIT",
-  "homepage": "https://github.com/YaroslavKabanov/comp392-cubeman_1.git",
+  "homepage": "https://github.com/YaroslavKabanov/solar_system.git",
   "ignore": [
     "**/.*",
     "node_modules",
