@@ -25,13 +25,16 @@ module objects {
         //PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++
        //  zoom out to see all planets 
         public zoomPlanetOut(): void {
+            zoom = false;  
             camera.position.set(0, 70, 180);
-            camera.lookAt(scene.position);          
+            camera.lookAt(scene.position);     
+              
          } 
           // zoom planet with moon 
          public zoomPlanetIn(): void {
             camera.position.set(earth.planet.position.x - 50, earth.planet.position.y + 50, earth.planet.position.z + 50);
             camera.lookAt(earth.planet.position);
+            zoom = true;
          } 
      }
  }

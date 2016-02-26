@@ -66,6 +66,7 @@ var pointLight: PointLight;
 var ambientLight: AmbientLight;
 var gui: GUI;
 var control: Control;
+var zoom: boolean;
 
     function init () {
         // new scene objects
@@ -210,8 +211,11 @@ var control: Control;
         moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
         moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
        
-      
-    //   control.zoomPlanetIn(); 
+        
+        if (zoom == true) {
+             control.zoomPlanetIn(); 
+        }
+        
         
 
         requestAnimationFrame(gameLoop);

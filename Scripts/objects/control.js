@@ -21,6 +21,7 @@ var objects;
         //PUBLIC METHODS +++++++++++++++++++++++++++++++++++++++
         //  zoom out to see all planets 
         Control.prototype.zoomPlanetOut = function () {
+            zoom = false;
             camera.position.set(0, 70, 180);
             camera.lookAt(scene.position);
         };
@@ -28,6 +29,7 @@ var objects;
         Control.prototype.zoomPlanetIn = function () {
             camera.position.set(earth.planet.position.x - 50, earth.planet.position.y + 50, earth.planet.position.z + 50);
             camera.lookAt(earth.planet.position);
+            zoom = true;
         };
         return Control;
     })();

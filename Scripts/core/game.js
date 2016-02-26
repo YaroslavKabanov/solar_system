@@ -61,6 +61,7 @@ var pointLight;
 var ambientLight;
 var gui;
 var control;
+var zoom;
 function init() {
     // new scene objects
     scene = new Scene();
@@ -167,7 +168,9 @@ function gameLoop() {
     neptune.planet.position.z = planetPositionZ(neptune.pos, neptune.speed);
     moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
     moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
-    //   control.zoomPlanetIn(); 
+    if (zoom == true) {
+        control.zoomPlanetIn();
+    }
     requestAnimationFrame(gameLoop);
     renderer.render(scene, camera);
 }
