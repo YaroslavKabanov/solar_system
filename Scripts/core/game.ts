@@ -57,8 +57,6 @@ var earthMoon: Planet;
 var mars: Planet;
 var uranus: Planet;
 var neptune: Planet;
-var moon: Planet;
-var moonTest: Mesh;
 var step: number = 1;
 var stats: Stats;
 var hemlLight: HemisphereLight;
@@ -67,6 +65,8 @@ var ambientLight: AmbientLight;
 var gui: GUI;
 var control: Control;
 var zoom: boolean;
+var moon: Mesh;
+var moonCentre: Object3D;
 
     function init () {
         // new scene objects
@@ -112,17 +112,14 @@ var zoom: boolean;
     neptune = new Planet(8, 'neptune', 100, 0.4);
     neptune.castShadow = true;
     
-    moon = new Planet(4, 'moon', 20, 0.4);
-    earth.add(moon.planet);
-    
-  /*  sphereMaterial = new LambertMaterial({color:0xFFFFFF});
-    sphereGeometry = new SphereGeometry(4,20,20);
-    moonTest = new Mesh(sphereGeometry,sphereMaterial);
-    moonTest.castShadow = true;
-    moonTest.receiveShadow = true;
-    moonTest.position.y = 10;  
-    earth.add(moonTest); 
-   */
+    moonCentre = new Object3D;
+   
+   sphereMaterial = new LambertMaterial({color:0xFF0000});
+   sphereGeometry = new SphereGeometry(2,20,20);
+   moon = new Mesh(sphereGeometry, sphereMaterial);
+   moon.castShadow = true; 
+   moonCentre.add(moon); 
+   
 
      scene.add(sun.planet);
      scene.add(mars.planet);
@@ -130,12 +127,14 @@ var zoom: boolean;
      scene.add(jupiter.planet);
      scene.add(uranus.planet);
      scene.add(neptune.planet);
-     
+     scene.add(moonCentre);
+      moonCentre.add(moon); 
+    
     
 
      // added hem Light 
-    hemlLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1);
-    scene.add(hemlLight);
+     hemlLight = new THREE.HemisphereLight( 0xffffff, 0xffffff, 1);
+     scene.add(hemlLight);
    
    /* 
     spotLight = new SpotLight( 0x000000 );
@@ -158,6 +157,10 @@ var zoom: boolean;
     pointLight.shadowMapHeight = 1248;
     
      scene.add(pointLight);
+     
+   
+     
+    
 
     // add ambient light 
     ambientLight = new AmbientLight(0x090909);
@@ -199,6 +202,9 @@ var zoom: boolean;
         earth.planet.position.x = planetPositionX(earth.pos, earth.speed);
         earth.planet.position.z = planetPositionZ(earth.pos, earth.speed);
         
+        moonCentre.position.x = planetPositionX(earth.pos, earth.speed);
+        moonCentre.position.z = planetPositionZ(earth.pos, earth.speed);
+        
         jupiter.planet.position.x = planetPositionX(jupiter.pos, jupiter.speed);
         jupiter.planet.position.z = planetPositionZ(jupiter.pos, jupiter.speed);
         
@@ -207,10 +213,10 @@ var zoom: boolean;
         
         neptune.planet.position.x = planetPositionX(neptune.pos, neptune.speed);
         neptune.planet.position.z = planetPositionZ(neptune.pos, neptune.speed);
-        
+   /*     
         moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
         moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
-       
+        */
         
         if (zoom == true) {
              control.zoomPlanetIn(); 
@@ -231,7 +237,7 @@ window.onload = function () {
 // Setup default renderer
     function setupRenderer(): void {
         renderer = new Renderer();
-        renderer.setClearColor(0x0f1212, 1.0);
+        renderer.setClearColor(0x000000, 1.0);
         renderer.setSize(window.innerWidth, window.innerHeight);
    //     renderer.shadowMap.enabled = true;
     }

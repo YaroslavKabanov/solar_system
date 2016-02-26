@@ -23,7 +23,7 @@ var objects;
         // planet constructor 
         function Planet(size, material, position, speed) {
             this.geometry = new THREE.SphereGeometry(size, 20, 20);
-            this.mat = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('images/' + material + '.jpg') });
+            this.mat = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('Content/images/' + material + '.jpg') });
             _super.call(this, this.geometry, this.mat);
             this.planet = new THREE.Mesh(this.geometry, this.mat);
             this.pos = position;

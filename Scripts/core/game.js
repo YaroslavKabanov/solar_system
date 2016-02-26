@@ -52,8 +52,6 @@ var earthMoon;
 var mars;
 var uranus;
 var neptune;
-var moon;
-var moonTest;
 var step = 1;
 var stats;
 var hemlLight;
@@ -62,6 +60,8 @@ var ambientLight;
 var gui;
 var control;
 var zoom;
+var moon;
+var moonCentre;
 function init() {
     // new scene objects
     scene = new Scene();
@@ -91,22 +91,20 @@ function createGeometry() {
     uranus.castShadow = true;
     neptune = new Planet(8, 'neptune', 100, 0.4);
     neptune.castShadow = true;
-    moon = new Planet(4, 'moon', 20, 0.4);
-    earth.add(moon.planet);
-    /*  sphereMaterial = new LambertMaterial({color:0xFFFFFF});
-      sphereGeometry = new SphereGeometry(4,20,20);
-      moonTest = new Mesh(sphereGeometry,sphereMaterial);
-      moonTest.castShadow = true;
-      moonTest.receiveShadow = true;
-      moonTest.position.y = 10;
-      earth.add(moonTest);
-     */
+    moonCentre = new Object3D;
+    sphereMaterial = new LambertMaterial({ color: 0xFF0000 });
+    sphereGeometry = new SphereGeometry(2, 20, 20);
+    moon = new Mesh(sphereGeometry, sphereMaterial);
+    moon.castShadow = true;
+    moonCentre.add(moon);
     scene.add(sun.planet);
     scene.add(mars.planet);
     scene.add(earth.planet);
     scene.add(jupiter.planet);
     scene.add(uranus.planet);
     scene.add(neptune.planet);
+    scene.add(moonCentre);
+    moonCentre.add(moon);
     // added hem Light 
     hemlLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
     scene.add(hemlLight);
@@ -160,14 +158,18 @@ function gameLoop() {
     mars.planet.position.z = planetPositionZ(mars.pos, mars.speed);
     earth.planet.position.x = planetPositionX(earth.pos, earth.speed);
     earth.planet.position.z = planetPositionZ(earth.pos, earth.speed);
+    moonCentre.position.x = planetPositionX(earth.pos, earth.speed);
+    moonCentre.position.z = planetPositionZ(earth.pos, earth.speed);
     jupiter.planet.position.x = planetPositionX(jupiter.pos, jupiter.speed);
     jupiter.planet.position.z = planetPositionZ(jupiter.pos, jupiter.speed);
     uranus.planet.position.x = planetPositionX(uranus.pos, uranus.speed);
     uranus.planet.position.z = planetPositionZ(uranus.pos, uranus.speed);
     neptune.planet.position.x = planetPositionX(neptune.pos, neptune.speed);
     neptune.planet.position.z = planetPositionZ(neptune.pos, neptune.speed);
-    moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
-    moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
+    /*
+         moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
+         moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
+         */
     if (zoom == true) {
         control.zoomPlanetIn();
     }
@@ -183,7 +185,7 @@ window.onload = function () {
 // Setup default renderer
 function setupRenderer() {
     renderer = new Renderer();
-    renderer.setClearColor(0x0f1212, 1.0);
+    renderer.setClearColor(0x000000, 1.0);
     renderer.setSize(window.innerWidth, window.innerHeight);
     //     renderer.shadowMap.enabled = true;
 }

@@ -24,7 +24,7 @@ module objects {
         // planet constructor 
         constructor (size:number, material:string, position:number, speed:number) {
             this.geometry = new THREE.SphereGeometry(size, 20, 20);
-            this.mat = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('images/' + material + '.jpg') });
+            this.mat = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('Content/images/' + material + '.jpg') });
             super(this.geometry, this.mat);
             this.planet = new THREE.Mesh(this.geometry, this.mat);
             this.pos = position;
