@@ -64,6 +64,8 @@ var zoomMars;
 var zoomJupiter;
 var moon;
 var moonCentre;
+var moon2;
+var moonCentre2;
 function init() {
     // new scene objects
     scene = new Scene();
@@ -95,12 +97,20 @@ function createGeometry() {
     neptune.castShadow = true;
     moonCentre = new Object3D;
     scene.add(moonCentre);
+    moonCentre2 = new Object3D;
+    scene.add(moonCentre2);
     sphereMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('Content/images/moon.jpg') });
     sphereGeometry = new SphereGeometry(2, 20, 20);
     moon = new Mesh(sphereGeometry, sphereMaterial);
     moon.position.set(6, 6, 0);
     moon.castShadow = true;
     moonCentre.add(moon);
+    sphereMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('Content/images/moon.jpg') });
+    sphereGeometry = new SphereGeometry(4, 20, 20);
+    moon2 = new Mesh(sphereGeometry, sphereMaterial);
+    moon2.position.set(10, 10, 0);
+    moon2.castShadow = true;
+    moonCentre2.add(moon2);
     scene.add(sun.planet);
     scene.add(mars.planet);
     scene.add(earth.planet);
@@ -109,6 +119,8 @@ function createGeometry() {
     scene.add(neptune.planet);
     scene.add(moonCentre);
     moonCentre.add(moon);
+    scene.add(moonCentre2);
+    moonCentre2.add(moon2);
     // added hem Light 
     hemlLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
     scene.add(hemlLight);
@@ -125,7 +137,7 @@ function createGeometry() {
     // added point light
     pointLight = new PointLight(0xffffff, 1, 100);
     pointLight.position.set(0, 0, 0);
-    pointLight.intensity = 20;
+    pointLight.intensity = 9;
     pointLight.distance = 120;
     pointLight.castShadow = true;
     pointLight.shadowMapWidth = 1024;
@@ -168,6 +180,8 @@ function gameLoop() {
     earth.planet.rotation.y += 0.020;
     moonCentre.position.x = planetPositionX(earth.pos, earth.speed);
     moonCentre.position.z = planetPositionZ(earth.pos, earth.speed);
+    moonCentre2.position.x = planetPositionX(neptune.pos, neptune.speed);
+    moonCentre2.position.z = planetPositionZ(neptune.pos, neptune.speed);
     jupiter.planet.position.x = planetPositionX(jupiter.pos, jupiter.speed);
     jupiter.planet.position.z = planetPositionZ(jupiter.pos, jupiter.speed);
     jupiter.planet.rotation.y += 0.020;
@@ -179,6 +193,8 @@ function gameLoop() {
     neptune.planet.rotation.y += 0.020;
     moonCentre.rotation.z += 0.020;
     moon.rotation.y += 0.025;
+    moonCentre2.rotation.z += 0.03;
+    moon2.rotation.y += 0.025;
     /*
          moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
          moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
