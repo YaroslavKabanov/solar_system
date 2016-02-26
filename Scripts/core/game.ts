@@ -100,35 +100,43 @@ function createGeometry(): void {
 
     sun = new Planet(15, 'sun', 0, 0);
     sun.castShadow = true;
+    sun.receiveShadow = true;
 
     mars = new Planet(4, 'mars', 20, 0.4);
     mars.castShadow = true;
+    mars.receiveShadow = true;
 
     earth = new Planet(5, 'earth', 40, 0.8);
     earth.castShadow = true;
+    earth.receiveShadow = true;
 
     jupiter = new Planet(10, 'jupiter', 70, 0.5);
     jupiter.castShadow = true;
+    jupiter.receiveShadow = true;
 
     uranus = new Planet(7, 'uranus', 90, 0.1);
     uranus.castShadow = true;
+    uranus.receiveShadow = true;
 
     neptune = new Planet(8, 'neptune', 110, 0.4);
     neptune.castShadow = true;
+    neptune.receiveShadow = true;
 
     moonCentre = new Object3D;
     scene.add(moonCentre);
+    
 
     moonCentre2 = new Object3D;
     scene.add(moonCentre2);
-
+    // earth's moon
     sphereMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('Content/images/moon.jpg') });
     sphereGeometry = new SphereGeometry(2, 20, 20);
     moon = new Mesh(sphereGeometry, sphereMaterial);
     moon.position.set(6, 6, 0);
     moon.castShadow = true;
     moonCentre.add(moon);
-
+    
+    // neptune's moon
     sphereMaterial = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('Content/images/moon.jpg') });
     sphereGeometry = new SphereGeometry(4, 20, 20);
     moon2 = new Mesh(sphereGeometry, sphereMaterial);
@@ -136,7 +144,7 @@ function createGeometry(): void {
     moon2.castShadow = true;
     moonCentre2.add(moon2);
 
-
+    // added planets to scene 
     scene.add(sun.planet);
     scene.add(mars.planet);
     scene.add(earth.planet);
@@ -145,12 +153,9 @@ function createGeometry(): void {
     scene.add(neptune.planet);
     scene.add(moonCentre);
     moonCentre.add(moon);
-
     scene.add(moonCentre2);
     moonCentre2.add(moon2); 
     
-    
-
     // added hem Light 
     hemlLight = new THREE.HemisphereLight(0xffffff, 0xffffff, 1);
     scene.add(hemlLight);
@@ -176,11 +181,7 @@ function createGeometry(): void {
     pointLight.shadowMapHeight = 1248;
 
     scene.add(pointLight);
-     
-   
-     
     
-
     // add ambient light 
     ambientLight = new AmbientLight(0x090909);
     scene.add(ambientLight);
@@ -195,8 +196,8 @@ addControl(control);
 
 function addControl(controlObject: Control): void {
     gui.add(controlObject, "zoomEarth"); // zoom planet with moon - Earth
-    gui.add(controlObject, "zoomMars");
-    gui.add(controlObject, "zoomJupiter");
+    gui.add(controlObject, "zoomMars"); // zoom to Mars
+    gui.add(controlObject, "zoomJupiter"); // zoom to Jupiter
     gui.add(controlObject, "zoomPlanetOut"); // back to normal view 
           
 }
@@ -247,11 +248,6 @@ function gameLoop(): void {
     moon.rotation.y += 0.025;
     moonCentre2.rotation.z += 0.03;
     moon2.rotation.y += 0.025;
-            
-    /*     
-         moon.planet.position.x = planetPositionX(moon.pos, moon.speed);
-         moon.planet.position.z = planetPositionZ(moon.pos, moon.speed);
-         */
 
     if (zoomEarth == true) {
         control.zoomEarth();
@@ -264,8 +260,6 @@ function gameLoop(): void {
     if (zoomJupiter == true) {
         control.zoomJupiter();
     }
-
-
 
     requestAnimationFrame(gameLoop);
     renderer.render(scene, camera);
