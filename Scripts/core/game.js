@@ -3,11 +3,13 @@
 // * Source file : game.ts                    *
 // * Author name : Yaroslav Kabanov           *
 // * Last Modified by : Yaroslav Kabanov      *
-// * Last Date Modified : February 5th, 2016  *
-// * Program Description : Three.js rotating  *
-// * cube-man. Player can change rotation     *
-// * speed and change color of the cubes.     *
+// * Last Date Modified : February 26th, 2016 *
+// * Program Description : Three.js based     *
+// * simulation of Solar System (6 planets)   *
+// * Version: 1.0                             *
 // ********************************************    
+// Git Rero: https://github.com/YaroslavKabanov/solar_system.git
+// Live Link: http://solar-system-kabanov.azurewebsites.net 
 var Scene = THREE.Scene;
 var Renderer = THREE.WebGLRenderer;
 var PerspectiveCamera = THREE.PerspectiveCamera;
@@ -69,11 +71,13 @@ function init() {
     // add an axis helper 
     axis = new AxisHelper(50);
     scene.add(axis);
+    // add stats 
     addStatsObject();
     document.body.appendChild(renderer.domElement);
 }
+// create all meshes and lights 
 function createGeometry() {
-    // new Planet(size,materialColor, positionFromSun, planetSpeed)
+    // new Planet(size,materialColor, distanceFromSun, planenRotationSpeed)
     sun = new Planet(15, 'sun', 0, 0);
     sun.castShadow = true;
     mars = new Planet(4, 'mars', 20, 0.4);
@@ -121,9 +125,10 @@ function createGeometry() {
     pointLight.intensity = 20;
     pointLight.distance = 100;
     pointLight.castShadow = true;
-    pointLight.shadowMapWidth = 2048;
-    pointLight.shadowMapHeight = 2048;
+    pointLight.shadowMapWidth = 1024;
+    pointLight.shadowMapHeight = 1248;
     scene.add(pointLight);
+    // add ambient light 
     ambientLight = new AmbientLight(0x090909);
     scene.add(ambientLight);
 }
@@ -132,18 +137,22 @@ gui = new GUI();
 control = new Control(0.05);
 addControl(control);
 function addControl(controlObject) {
-    gui.add(controlObject, "zoomPlanetIn");
-    gui.add(controlObject, "zoomPlanetOut");
+    gui.add(controlObject, "zoomPlanetIn"); // zoom planet with moon
+    gui.add(controlObject, "zoomPlanetOut"); // back to normal view 
 }
+// planet position x 
 function planetPositionX(position, speed) {
     return position * Math.sin(step * speed);
 }
+// planet position z
 function planetPositionZ(position, speed) {
     return position * Math.cos(step * speed);
 }
+// planet position y
 function planetPositionY(position, speed) {
     return position * Math.cos(step * speed);
 }
+// game loop 
 function gameLoop() {
     step += 0.01;
     mars.planet.position.x = planetPositionX(mars.pos, mars.speed);
@@ -162,6 +171,7 @@ function gameLoop() {
     requestAnimationFrame(gameLoop);
     renderer.render(scene, camera);
 }
+// on page load methods     
 window.onload = function () {
     init();
     createGeometry();
@@ -170,7 +180,7 @@ window.onload = function () {
 // Setup default renderer
 function setupRenderer() {
     renderer = new Renderer();
-    renderer.setClearColor(0x040404, 1.0);
+    renderer.setClearColor(0x0f1212, 1.0);
     renderer.setSize(window.innerWidth, window.innerHeight);
     //     renderer.shadowMap.enabled = true;
 }
@@ -182,6 +192,7 @@ function setupCamera() {
     camera.position.z = 180;
     camera.lookAt(scene.position);
 }
+// add stats
 function addStatsObject() {
     stats = new Stats();
     stats.setMode(0);

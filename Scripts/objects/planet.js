@@ -4,10 +4,23 @@ var __extends = (this && this.__extends) || function (d, b) {
     function __() { this.constructor = d; }
     d.prototype = b === null ? Object.create(b) : (__.prototype = b.prototype, new __());
 };
+// ********************************************
+// * Source file : planet.ts                  *
+// * Author name : Yaroslav Kabanov           *
+// * Last Modified by : Yaroslav Kabanov      *
+// * Last Date Modified : February 26th, 2016 *
+// * Program Description : Three.js based     *
+// * simulation of Solar System (6 plantes)   *
+// * Version: 1.0                             *
+// ********************************************    
+// Git Rero: https://github.com/YaroslavKabanov/solar_system.git
+// Live Link: http://solar-system-kabanov.azurewebsites.net 
 var objects;
 (function (objects) {
+    // Planet class 
     var Planet = (function (_super) {
         __extends(Planet, _super);
+        // planet constructor 
         function Planet(size, material, position, speed) {
             this.geometry = new THREE.SphereGeometry(size, 20, 20);
             this.mat = new THREE.MeshLambertMaterial({ map: THREE.ImageUtils.loadTexture('images/' + material + '.jpg') });
